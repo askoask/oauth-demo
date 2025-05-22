@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
       given_name: payload.given_name,
       family_name: payload.family_name,
       picture: payload.picture,
-      secretInfo: "This is a secret info from server " + Math.random(),
+      secretInfo: "Server memory usage " + getMemoryUsage(),
     });
   } catch (e) {
     // If invalid or missing cookie, return 401 Unauthorized
@@ -38,3 +38,20 @@ router.get("/", async (req, res) => {
 });
 
 export default router;
+
+function getMemoryUsage() {
+  const memoryUsage = process.memoryUsage();
+
+  const formatBytes = (bytes) => {
+    const units = ["B", "KB", "MB", "GB", "TB"];
+    let i = 0;
+    while (bytes >= 1024 && i < units.length - 1) {
+      bytes /= 1024;
+      i++;
+    }
+    return `${bytes.toFixed(2)} ${units[i]}`;
+  };
+
+  // return `RSS: ${formatBytes(memoryUsage.rss)}, Heap Total: ${formatBytes(memoryUsage.heapTotal)}, Heap Used: ${formatBytes(memoryUsage.heapUsed)}, External: ${formatBytes(memoryUsage.external)}`;
+  return formatBytes(memoryUsage.rss);
+}

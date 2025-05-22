@@ -23,14 +23,14 @@ const LoginPage = () => {
       username:
         username.length < 3
           ? "Username must be at least 3 characters"
-          : username.length > 10
-            ? "Username must be at most 10 characters"
+          : username.length > 100
+            ? "Username must be at most 100 characters"
             : "",
       password:
         password.length < 6
           ? "Password must be at least 6 characters"
-          : password.length > 10
-            ? "Password must be at most 10 characters"
+          : password.length > 100
+            ? "Password must be at most 100 characters"
             : "",
     };
 
@@ -87,7 +87,7 @@ const LoginPage = () => {
             )}
             <input
               type="text"
-              placeholder="Username"
+              placeholder="eg. test@example.com"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               onBlur={() => setTouched((prev) => ({ ...prev, username: true }))}
@@ -110,7 +110,7 @@ const LoginPage = () => {
 
             <input
               type="password"
-              placeholder="Password"
+              placeholder="eg. test123"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
