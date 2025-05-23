@@ -2,8 +2,9 @@ import express from "express"; // Web framework for handling routes and HTTP
 import cookieParser from "cookie-parser"; // To parse cookies from requests
 import cors from "cors"; // To enable cross-origin requests
 import "dotenv/config";
+import routes from "./routes/index.js";
 
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4000;
 const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors({ origin: frontendBaseUrl, credentials: true }));
 // Enable cookie parsing for incoming requests
 app.use(cookieParser());
+app.use("/", routes);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`),
