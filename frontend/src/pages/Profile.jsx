@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import config from "../config/index.js";
-
+import { fetchWithAuth } from "../utils/apiCLient.js";
+import { handleLogout } from "../utils/logout.js";
 /**
  * ProfilePage component - displays the authenticated user's profile information
  * Handles fetching profile data, displaying loading state, and logout functionality
@@ -22,32 +23,12 @@ const ProfilePage = () => {
    */
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${config.API_URL}/profile`, {
-        credentials: "include", // Include cookies for authentication
-      });
-
-      if (res.ok) {
-        const data = await res.json(); // Parse JSON response
-        setUser(data); // Update state with user data
-      } else {
-        navigate("/login"); // Redirect to log in if unauthorized
-      }
+      const data = await fetchWithAuth(`/profile`);
+      setUser(data); // Update state with user data
     } catch (error) {
       console.error("Failed to fetch profile:", error);
       navigate("/login"); // Redirect to log in on network/server errors
     }
-  };
-
-  /**
-   * Handles user logout by calling backend logout endpoint
-   * and redirecting to the login page
-   */
-  const handleLogout = async () => {
-    await fetch(`${config.API_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include", // Include cookies for authentication
-    });
-    navigate("/login");
   };
 
   // Show loading state while fetching user data
@@ -93,9 +74,6 @@ const ProfilePage = () => {
           <div>
             <strong>Family Name:</strong> {user.family_name}
           </div>
-        </div>
-        <div className="info">
-          <strong>Secret Info:</strong> {user.secretInfo}
         </div>
         <button className="button logout-button" onClick={handleLogout}>
           Logout

@@ -1,166 +1,396 @@
 /* Reset & Base */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ensure App container takes full width */
+html,
+body,
 #root {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
 }
 
-/* Page Container - Full Centering */
+/* Page Container - block layout by default */
 .page {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Only center login and loading pages */
+.page.login-page,
+.page.loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 /* Card Component */
 .card {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    transition: transform 0.3s ease;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 /* Headings */
 .card h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: #222;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #222;
 }
 
 .card h2 {
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    color: #222;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  color: #222;
 }
 
 .card p {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
 }
 
 .email {
-    color: #888;
-    font-size: 0.9rem;
+  color: #888;
+  font-size: 0.9rem;
 }
 
 /* Avatar */
 .avatar {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto 1rem;
-    box-shadow: 0 0 0 4px #007bff20;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  box-shadow: 0 0 0 4px #007bff20;
 }
 
 /* Buttons */
 .button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 300;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    transition: background 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .button.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    pointer-events: none;
-    color: #777;
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #777;
 }
 
 .button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .logout-button {
-    background-color: #dc3545;
-    margin-top: 1.5rem;
+  background-color: #dc3545;
 }
 
 .logout-button:hover {
-    background-color: #a71d2a;
+  background-color: #a71d2a;
 }
 
 /* Info Section */
 .info {
-    text-align: left;
-    margin-top: 1rem;
-    padding: 0.5rem;
-    background-color: #f9f9f9;
-    border-radius: 0.5rem;
-    font-size: 0.95rem;
-    color: #444;
+  text-align: left;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  color: #444;
 }
 
 .info div {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Loading */
 .loading-page {
-    background-color: #f0f2f5;
-    font-size: 1.2rem;
-    color: #555;
+  background-color: #f0f2f5;
+  font-size: 1.2rem;
+  color: #555;
 }
 
 .input-style {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    outline: none;
-    max-width: 300px;
-    background-color: #fff;
-    color: #222;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  max-width: 300px;
+  background-color: #fff;
+  color: #222;
 }
 
 .input-style.error {
-    border-color: red;
-    outline-color: red;
+  border-color: red;
+  outline-color: red;
 }
 
 .login-page hr {
-    margin: 20px 0;
+  margin: 20px 0;
+}
+
+/* --- Chat Page Modern Layout --- */
+.chat-page {
+  width: 100vw;
+  height: 100vh;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
+}
+
+.navbar {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem 2rem 0.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 64px;
+  z-index: 2;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.avatar.small {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  box-shadow: none;
+}
+
+.user-link {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #222;
+  margin-left: 12px;
+}
+
+.chat-content {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0rem 0.5rem 1rem 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.chat-messages {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 0.5rem 0.5rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  min-height: 320px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 960px;
+  width: 100%;
+}
+
+.no-messages {
+  color: #aaa;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.chat-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.1rem 0;
+}
+
+.chat-user {
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.chat-text {
+  color: #333;
+  word-break: break-word;
+}
+
+.chat-input-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem 0.75rem;
+  align-items: stretch;
+  margin-top: 0;
+}
+
+.chat-input {
+  width: 100%;
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #f5f6fa;
+  color: #222;
+  margin-right: 0;
+  min-height: 3em;
+  max-height: 8em;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.send-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.send-button {
+  min-width: 80px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.send-button:hover {
+  background: #0056b3;
+}
+
+.sidebar-products {
+  width: 320px;
+  min-height: 100%;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 24px;
+}
+
+.product-card {
+  text-align: left;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  margin-bottom: 0;
+  background: #fafbfc;
+}
+
+.product-card .button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* --- Fixed Navbar for Chat Page --- */
+.navbar-fixed {
+  /* removed fixed positioning */
+}
+
+/* Ensures main content is not hidden behind the fixed navbar */
+.with-navbar {
+  /* removed margin-top */
+}
+
+/* Main layout for chat and sidebar */
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+  gap: 1px;
+  align-items: flex-start;
+}
+
+.chat-content,
+.sidebar-products {
+  margin-top: 0.5rem;
+}
+
+.chat-content {
+  flex: 1 1 0;
+  max-width: 800px;
+  min-width: 0;
+}
+
+.sidebar-products {
+  width: 320px;
+  min-width: 240px;
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    gap: 0;
+  }
+  .chat-content,
+  .sidebar-products {
+    margin-top: 0.5rem;
+  }
+  .sidebar-products {
+    margin-top: 24px;
+  }
 }

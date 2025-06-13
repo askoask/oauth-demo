@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+import crypto from 'node:crypto';
 
 /**
  *  This is the length (in bytes) of the derived key (hashed password).
@@ -19,7 +19,7 @@ class CryptoService {
   /**
    * const key = crypto.randomBytes(32).toString("hex");
    */
-  #key = Buffer.from(process.env.CRYPTO_KEY, "hex");
+  #key = Buffer.from(process.env.CRYPTO_KEY, 'hex');
 
   constructor() {
     if (CryptoService.#instance) {
@@ -32,18 +32,18 @@ class CryptoService {
   encrypt(text) {
     // Initialization Vector (12 bytes for GCM)
     const iv = crypto.randomBytes(12);
-    const cipher = crypto.createCipheriv("aes-256-gcm", this.#key, iv);
+    const cipher = crypto.createCipheriv('aes-256-gcm', this.#key, iv);
 
     const encrypted = Buffer.concat([
-      cipher.update(text, "utf8"),
+      cipher.update(text, 'utf8'),
       cipher.final(),
     ]);
     const authTag = cipher.getAuthTag();
 
     return JSON.stringify({
-      iv: iv.toString("hex"),
-      content: encrypted.toString("hex"),
-      tag: authTag.toString("hex"),
+      iv: iv.toString('hex'),
+      content: encrypted.toString('hex'),
+      tag: authTag.toString('hex'),
     });
   }
 
@@ -51,18 +51,18 @@ class CryptoService {
     const { iv, content, tag } = JSON.parse(encrypted);
 
     const decipher = crypto.createDecipheriv(
-      "aes-256-gcm",
+      'aes-256-gcm',
       this.#key,
-      Buffer.from(iv, "hex"),
+      Buffer.from(iv, 'hex')
     );
-    decipher.setAuthTag(Buffer.from(tag, "hex"));
+    decipher.setAuthTag(Buffer.from(tag, 'hex'));
 
     const decrypted = Buffer.concat([
-      decipher.update(Buffer.from(content, "hex")),
+      decipher.update(Buffer.from(content, 'hex')),
       decipher.final(),
     ]);
 
-    return decrypted.toString("utf8");
+    return decrypted.toString('utf8');
   }
 
   hashPassword(password) {
@@ -71,7 +71,7 @@ class CryptoService {
      *  16 bytes = 128 bits, which is considered sufficient to prevent precomputed attacks like rainbow tables.
      *  It’s industry standard (used in systems like bcrypt, scrypt, and PBKDF2) and recommended by NIST.
      */
-    const salt = crypto.randomBytes(16).toString("hex");
+    const salt = crypto.randomBytes(16).toString('hex');
 
     return new Promise((resolve, reject) => {
       crypto.scrypt(
@@ -80,15 +80,15 @@ class CryptoService {
         PASSWORD_HASH_KEY_LENGTH,
         (err, derivedKey) => {
           if (err) return reject(err);
-          const hash = derivedKey.toString("hex");
+          const hash = derivedKey.toString('hex');
           resolve(`${salt}:${hash}`);
-        },
+        }
       );
     });
   }
 
   verifyPassword(password, storedHash) {
-    const [salt, originalHash] = storedHash.split(":");
+    const [salt, originalHash] = storedHash.split(':');
 
     return new Promise((resolve, reject) => {
       crypto.scrypt(
@@ -97,14 +97,14 @@ class CryptoService {
         PASSWORD_HASH_KEY_LENGTH,
         (err, derivedKey) => {
           if (err) return reject(err);
-          const hash = derivedKey.toString("hex");
+          const hash = derivedKey.toString('hex');
           resolve(
             crypto.timingSafeEqual(
-              Buffer.from(hash, "hex"),
-              Buffer.from(originalHash, "hex"),
-            ),
+              Buffer.from(hash, 'hex'),
+              Buffer.from(originalHash, 'hex')
+            )
           );
-        },
+        }
       );
     });
   }
